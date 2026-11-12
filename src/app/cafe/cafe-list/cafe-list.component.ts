@@ -1,6 +1,7 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { Cafe } from '../cafe';
 import { CafeService } from '../cafe.service';
+
 
 @Component({
   selector: 'app-cafe-list',
@@ -11,6 +12,12 @@ import { CafeService } from '../cafe.service';
 })
 export class CafeList implements OnInit {
   cafes = signal<Cafe[]>([]);
+  totalOrigen = computed(
+    () => this.cafes().filter((cafe) => cafe.tipo === 'Café de Origen').length
+  );
+  totalBlend = computed(
+    () => this.cafes().filter((cafe) => cafe.tipo === 'Blend').length
+  );
   constructor(private cafeService: CafeService) {}
 
 
